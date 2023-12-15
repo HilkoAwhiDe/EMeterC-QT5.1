@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Display.png</file>
+        <file>Toggle-Button.fw.png</file>
+    </qresource>
+</RCC>
