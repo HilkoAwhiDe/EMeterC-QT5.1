@@ -37,19 +37,20 @@ void TcpSource::stop()
 void TcpSource::send()
 {
     double dVal = 0.0;
-    char szLine[12];
-    memset(szLine,0,sizeof(szLine));
     if(m_pclientSocket->state() == QAbstractSocket::ConnectedState)
     {
-        if (m_pclientSocket->waitForReadyRead() && m_pclientSocket->bytesAvailable() > 0)
+        if (m_pclientSocket->waitForReadyRead() && m_pclientSocket->bytesAvailable() >= 4)
         {
+            QByteArray ar = m_pclientSocket->readAll().constData();
+            const char * pIn = ar.constData();
 
-            m_pclientSocket->read(szLine,11);
-            qDebug() << szLine;
-            dVal = atof(szLine);
-            dispatch( dVal );
+            //qDebug() << strlen(szLine);
+            if (strlen(szLine) > 3)
+            {
+                qDebug() << pIn;
+                dVal = atof(pIn);
+                dispatch( dVal );
+            }
         }
     }
-
-
 }
